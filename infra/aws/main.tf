@@ -14,15 +14,20 @@ provider "aws" {
   region  = var.region
 }
 
-resource "aws_instance" "app_server" {
+resource "aws_instance" "api_server" {
   ami           = var.ami
   instance_type = var.instancia
-  key_name = var.key
+  key_name      = var.key
   tags = {
-    Name = var.nome
+    Name        = var.nome
   } 
   security_groups = [ var.sg, "default" ]
 }
 
-# resource "aws_default_vpc" "default" {  
-# }
+output "ip_publico" {
+  value = aws_instance.api_server.public_ip
+}
+
+output "ip_privado" {
+  value = aws_instance.api_server.private_ip
+}
