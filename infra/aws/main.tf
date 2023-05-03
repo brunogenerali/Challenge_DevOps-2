@@ -31,7 +31,7 @@ resource "aws_instance" "api_db" {
   tags = {
     Name        = "${var.nome}-DB"
   } 
-  security_groups = ["default"]
+  security_groups = ["default", var.sg]
 }
 output "ip_publico" {
   value = ["API Server: ", aws_instance.api_server.public_ip, "API-DB: ", aws_instance.api_db.public_ip]
