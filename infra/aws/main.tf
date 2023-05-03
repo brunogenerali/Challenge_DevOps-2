@@ -19,15 +19,24 @@ resource "aws_instance" "api_server" {
   instance_type = var.instancia
   key_name      = var.key
   tags = {
-    Name        = var.nome
+    Name        = "${var.nome}-API"
   } 
   security_groups = [ var.sg, "default" ]
 }
 
+resource "aws_instance" "api_db" {
+  ami           = var.ami
+  instance_type = var.instancia
+  key_name      = var.key  
+  tags = {
+    Name        = "${var.nome}-DB"
+  } 
+  security_groups = ["default"]
+}
 output "ip_publico" {
-  value = aws_instance.api_server.public_ip
+  value = ["API Server: ", aws_instance.api_server.public_ip, "API-DB: ", aws_instance.api_db.public_ip]
 }
 
 output "ip_privado" {
-  value = aws_instance.api_server.private_ip
+  value = ["Private IP DB: ", aws_instance.api_db.private_ip]
 }
