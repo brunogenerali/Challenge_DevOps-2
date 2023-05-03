@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -30,7 +30,18 @@ jobs:
     - name: Build with Maven
       run: mvn -B clean package --file pom.xml
 
-#     - name: Publish to GitHub Packages Apache Maven
-#       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-#       env:
-#         GITHUB_TOKEN: ${{ github.token }}
+    - name: Copy files with SSH
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "./"
+        REMOTE_HOST: ${{secrets.EC2_DNS}}
+        REMOTE_USER: ${{secrets.EC2_USER}}
+        TARGET: ${{secrets.TARGET_DIR}}
+        EXCLUDE: ".github/*"
+
+    - name: Publish to GitHub Packages Apache Maven
+      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
