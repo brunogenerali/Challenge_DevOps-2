@@ -1,16 +1,29 @@
-# Sobre o desafio
+# Challenge DevOps Alura
 
-**História**
-Precisamos fazer o deploy de uma aplicação através de uma maquina virtual.  
+## Sobre o projeto
+
+Fazer o deploy de uma aplicação através de uma maquina virtual. 
 
 Para realizar o deploy da aplicação será usado uma aplicação já existente, precisaremos criar uma maquina virtual para a aplicação, colocar o código da aplicação em um repositório, vamos automatizar o processo de testes e deploy usando rotinas de CI e CD. Por fim vamos coletar métricas da aplicação usando ferramentas de SRE.
 
-## Familiarizando com a aplicação
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **Challenge DevOps**
+| :label: Tecnologias | java, terraform, CI/DC
+| :rocket: URL         | 
+| :fire: Desafio     | [Challenge DevOps 2]([https://](https://www.alura.com.br/challenges/devops-2))
+
+<!-- Inserir imagem com a #vitrinedev ao final do link -->
+![](https://img.mandic.com.br/2018/06/Devops-o-que-e-DevOps-significado.png?rel=outbound#vitrinedev)
+
+## Detalhes do projeto
+
+### Familiarizando com a aplicação
 
 Pesquisado como realizar build de projetos JAVA Springboot com Maven.
 Principal fonte foi a própria formação de [Java Springboot]([https://](https://cursos.alura.com.br/formacao-spring-boot-3)) da Alura.
 
-## 💻 Sobre o projeto
+## 💻 Sobre a API
 
 Voll.med é uma clínica médica fictícia que precisa de um aplicativo para gestão de consultas. O aplicativo deve possuir funcionalidades que permitam o cadastro de médicos e de pacientes, e também o agendamento e cancelamento de consultas.
 
