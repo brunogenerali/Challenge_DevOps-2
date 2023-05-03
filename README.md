@@ -23,6 +23,8 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 Pesquisado como realizar build de projetos JAVA Springboot com Maven.
 Principal fonte foi a própria formação de [Java Springboot]([https://](https://cursos.alura.com.br/formacao-spring-boot-3)) da Alura.
 
+**Em desenvolvimento...**
+
 ## 💻 Sobre a API
 
 Voll.med é uma clínica médica fictícia que precisa de um aplicativo para gestão de consultas. O aplicativo deve possuir funcionalidades que permitam o cadastro de médicos e de pacientes, e também o agendamento e cancelamento de consultas.
