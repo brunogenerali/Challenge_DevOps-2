@@ -34,21 +34,26 @@ jobs:
       env:
         PRIVATE_KEY: ${{ secrets.LOCAL_SSH_KEY  }}
         HOSTNAME: ${{ secrets.LOCAL_DNS  }}
-        USER_NAME: ${{ secrets.LOCAL_USER  }}        
+        USER_NAME: ${{ secrets.LOCAL_USER  }}    
       run: |
-        echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem        
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
-          pkill java
-          rm -rf /home/ubuntu/api
-          git clone https://github.com/brunogenerali/Challenge_DevOps-2.git api
-          cd api
-          git checkout main
-          git pull origin main
-          mvn clean -Dmaven.test.skip package
-          nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar &
-          echo "API Started"
-        '
-        rm -rf private_key.pem
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
+        chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} 'bash -s' < /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh 
+      # run: |
+      #   echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
+      #   chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
+      #   ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} 'bash -s' < /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh '
+      #     pkill java
+      #     rm -rf /home/ubuntu/api
+      #     git clone https://github.com/brunogenerali/Challenge_DevOps-2.git api
+      #     cd api
+      #     git checkout main
+      #     git pull origin main
+      #     mvn clean -Dmaven.test.skip package
+      #     nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar &
+      #     echo "API Started"
+      #   '
+      #   rm -rf private_key.pem
 
     # - name: Publish to GitHub Packages Apache Maven
     #   run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
