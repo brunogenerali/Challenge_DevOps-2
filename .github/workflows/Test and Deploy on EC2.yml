@@ -38,7 +38,7 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
         chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} < /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh
         rm -rf private_key.pem
 
 
