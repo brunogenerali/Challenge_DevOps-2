@@ -1,0 +1,11 @@
+- hosts: env-dev
+  tasks:
+  - name: Instalando o python3, virtualenv
+    apt:
+      pkg:
+      - openjdk-17-jre-headless
+      - openjdk-17-jdk-headless
+      - maven
+      - mysql-server
+      update_cache: yes
+    become: yes
