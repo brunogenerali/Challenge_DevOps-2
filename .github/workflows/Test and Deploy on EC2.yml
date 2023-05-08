@@ -53,7 +53,6 @@ jobs:
       #     git checkout main
       #     git pull origin main
       #     mvn clean -Dmaven.test.skip package
-      #     nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar &
-      #     echo "API Started"
+      #     nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &      #     
       #   '
       #   rm -rf private_key.pem
