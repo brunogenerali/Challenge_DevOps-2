@@ -9,3 +9,10 @@
       - mysql-server
       update_cache: yes
     become: yes
+
+  - name: Alterar senha do usuário root
+    mysql_user:
+      name: root
+      password: root
+      login_user: root      
+      host_all: yes

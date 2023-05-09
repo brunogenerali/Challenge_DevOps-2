@@ -1,0 +1,59 @@
+# This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
+# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+
+name: DEV Java CI/CD
+
+on:
+ push:
+    branches: [ "dev" ]
+ pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+    - name: Build with Maven
+      run: mvn -B clean package --file pom.xml
+      
+    - name: Deploy DEV on AWS
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY  }}
+        HOSTNAME: 54.85.81.159
+        USER_NAME: ${{ secrets.EC2_USER  }}    
+      run: |
+        echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
+        chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} < /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh
+        rm -rf private_key.pem
+
+
+      # run: |
+      #   echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
+      #   chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
+      #   ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+      #     pkill java
+      #     rm -rf /home/ubuntu/api
+      #     git clone https://github.com/brunogenerali/Challenge_DevOps-2.git api
+      #     cd api
+      #     git checkout main
+      #     git pull origin main
+      #     mvn clean -Dmaven.test.skip package
+      #     nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar &
+      #     echo "API Started"
+      #   '
+      #   rm -rf private_key.pem
