@@ -23,6 +23,32 @@ Para realizar o deploy da aplicação será usado uma aplicação já existente,
 Pesquisado como realizar build de projetos JAVA Springboot com Maven.
 Principal fonte foi a própria formação de [Java Springboot]([https://](https://cursos.alura.com.br/formacao-spring-boot-3)) da Alura.
 
+### Criando a Maquina virtual
+
+**Ambiente 1:**
+
+- Foi criado uma maquina virtual local utilizando Hyper-V. Sistema Operacional Ubuntu 22;  
+- Realizado instalação das tecnologias utilizadas, Java 17, Maven e MySql;  
+- Configurado acesso e usuário do banco de dados, e criados as 2 base de dados;  
+- Configurado firewall e DNS para receber conexões para o CI/CD;  
+
+**Ambiente 2:**
+
+- Criado 2 instancias EC2 na AWS. Sistema Operacional Ubuntu 22;  
+- Em uma instancia instaldo tecnologias utilizadas para a aplicação. Na outra instalado o Banco de Dados MySql;  
+- Configurado Security Groups para acessos externos e conexão do banco;  
+- Configurado acesso e usuário do banco de dados, e criados as 2 base de dados;  
+- Utilizar Terraform e Ansible para provisionar e gerenciar as instancias (Em desenvolvimento);
+
+### Testando a aplicação na VM
+
+**Ambiente 1:**
+Realizado clone do repositório, realizado o BUILD da API e executado o arquivo .jar criado.
+
+`mvn clean package`  
+`nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &`  
+
+
 **Em desenvolvimento...**
 
 ## 💻 Sobre a API
