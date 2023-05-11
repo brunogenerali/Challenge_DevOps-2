@@ -1,0 +1,51 @@
+- name: Instalar e configurar o MySQL Server
+  hosts: aws-db
+  become: true
+  vars:
+    mysql_root_password: root  
+    mysql_config_file: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+  tasks:
+    - name: Instalar pacotes mysql-server, python e python3-mysqldb
+      apt:
+        name:
+          - mysql-server
+          - python3        
+          - python3-pip
+          - python3-mysqldb
+        update_cache: yes
+        state: present
+
+    - name: Instala o módulo PyMySQL
+      pip:
+        name: pymysql
+        state: present
+
+    - name: Alterar a senha do usuário root
+      mysql_user:
+        name: root
+        password: "{{ mysql_root_password }}"        
+        host_all: yes
+      ignore_errors: yes
+
+    - name: Criar bancos de dados
+      mysql_db:
+        name: "{{ item }}"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"      
+      loop:
+        - vollmed_api
+        - vollmed_api_test
+
+    
+    - name: Atualizar o arquivo de configuração do MySQL
+      lineinfile:
+        path: "{{ mysql_config_file }}"
+        regexp: "^bind-address"
+        line: "bind-address = 0.0.0.0"
+
+    - name: Reiniciar o serviço do MySQL
+      service:
+        name: mysql
+        state: restarted

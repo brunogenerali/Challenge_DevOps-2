@@ -1,0 +1,5 @@
+[aws-db]
+54.209.146.235 ansible_user=ubuntu ansible_ssh_private_key_file=/mnt/d/Challenge_DevOps_2/infra/aws/.secrets/challenge_prod
+
+[aws-api]
+18.207.222.126 ansible_user=ubuntu ansible_ssh_private_key_file=/mnt/d/Challenge_DevOps_2/infra/aws/.secrets/challenge_prod
