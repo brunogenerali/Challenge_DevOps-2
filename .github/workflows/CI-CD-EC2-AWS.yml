@@ -31,8 +31,8 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: *
-        target: /home/ubuntu/api
+        source: ./*
+        target: /home/ubuntu/deploy
     - name: SSH into EC2 instance and run deploy script
       uses: appleboy/ssh-action@master
       with:
@@ -44,7 +44,7 @@ jobs:
           pkill java
           sudo rm -rf /home/ubuntu/api
           mkdir api
-          mv api.jar api/
+          mv -r deploy/* api/
           cd api/
-          nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://3.86.101.79/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar api.jar > out.txt 2>&1 &
+          nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &
           
