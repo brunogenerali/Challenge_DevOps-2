@@ -31,8 +31,8 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_SSH_KEY }}
-        source: target/*.jar
-        target: /home/ubuntu/api.jar
+        source: *
+        target: /home/ubuntu/api
     - name: SSH into EC2 instance and run deploy script
       uses: appleboy/ssh-action@master
       with:
