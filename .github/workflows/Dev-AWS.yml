@@ -33,7 +33,7 @@ jobs:
     - name: Deploy DEV on AWS
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY  }}
-        HOSTNAME: 54.85.81.159
+        HOSTNAME: ${{ secrets.EC2_HOST  }}
         USER_NAME: ${{ secrets.EC2_USER  }}    
       run: |
         echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
