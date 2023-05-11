@@ -42,14 +42,20 @@ Principal fonte foi a própria formação de [Java Springboot]([https://](https:
 
 ### Testando a aplicação na VM
 
-**Ambiente 1:**
 Realizado clone do repositório, realizado o BUILD da API e executado o arquivo .jar criado.
 
 `mvn clean package`  
 `nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &`  
 
+### CI/CD
+
+Ferramenta escolhida para criar Pipeline de CI/CD foi o Github Actions.  
+Realizado rotina de testes já presentes na API  
+Feito Deploy via conexão SSH, e execução de Script de inicialização.  
 
 **Em desenvolvimento...**
+
+-----
 
 ## 💻 Sobre a API
 
