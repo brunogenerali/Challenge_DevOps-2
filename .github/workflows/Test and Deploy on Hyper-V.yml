@@ -40,3 +40,20 @@ jobs:
         chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
         ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} < /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh
         rm -rf private_key.pem
+
+
+      # run: |
+      #   echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
+      #   chmod +x /home/runner/work/Challenge_DevOps-2/Challenge_DevOps-2/start.sh      
+      #   ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
+      #     pkill java
+      #     rm -rf /home/ubuntu/api
+      #     git clone https://github.com/brunogenerali/Challenge_DevOps-2.git api
+      #     cd api
+      #     git checkout main
+      #     git pull origin main
+      #     mvn clean -Dmaven.test.skip package
+      #     nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://localhost/vollmed_api -DDATASOURCE_USERNAME=root -DDATASOURCE_PASSWORD=root -jar target/api-0.0.1-SNAPSHOT.jar &
+      #     echo "API Started"
+      #   '
+      #   rm -rf private_key.pem
