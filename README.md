@@ -2,7 +2,7 @@
 
 ## ♾️ Sobre o projeto
 
-Fazer o deploy de uma aplicação através de uma maquina virtual. 
+Fazer o deploy de uma aplicação através de uma maquina virtual.
 
 Para realizar o deploy da aplicação será usado uma aplicação já existente, precisaremos criar uma maquina virtual para a aplicação, colocar o código da aplicação em um repositório, vamos automatizar o processo de testes e deploy usando rotinas de CI e CD. Por fim vamos coletar métricas da aplicação usando ferramentas de SRE.
 
@@ -83,7 +83,7 @@ Voll.med é uma clínica médica fictícia que precisa de um aplicativo para ges
 
 Enquanto um time de desenvolvimento será responsável pelo aplicativo mobile, o nosso será responsável pelo desenvolvimento da API Rest desse projeto.
 
----
+-----
 
 ## ⚙️ Funcionalidades
 
@@ -92,19 +92,19 @@ Enquanto um time de desenvolvimento será responsável pelo aplicativo mobile, o
 - [x] Agendamento de consultas;
 - [x] Cancelamento de consultas.
 
----
+-----
 
 ## 🎨 Layout
 
-O layout da aplicação mobile está disponível neste link: <a href="https://www.figma.com/file/N4CgpJqsg7gjbKuDmra3EV/Voll.med">Figma</a>
+O layout da aplicação mobile está disponível neste link: [Figma](https://www.figma.com/file/N4CgpJqsg7gjbKuDmra3EV/Voll.med)
 
----
+-----
 
 ## 📄 Documentação
 
-A documentação das funcionalidades da aplicação pode ser acessada neste link: <a href="https://trello.com/b/O0lGCsKb/api-voll-med">Trello</a>
+A documentação das funcionalidades da aplicação pode ser acessada neste link: [Trello](https://trello.com/b/O0lGCsKb/api-voll-med)
 
----
+-----
 
 ## 🛠 Tecnologias
 
@@ -118,12 +118,12 @@ As seguintes tecnologias foram utilizadas no desenvolvimento da API Rest do proj
 - **[Flyway](https://flywaydb.org)**
 - **[Lombok](https://projectlombok.org)**
 
----
+-----
 
 ## 📝 Licença
 
 API desenvolvido por [Alura](https://www.alura.com.br) e utilizado nos cursos de Spring Boot.
 
-Instrutor: [Rodrigo Ferreira](https://cursos.alura.com.br/user/rodrigo-ferreira) 
+Instrutor: [Rodrigo Ferreira](https://cursos.alura.com.br/user/rodrigo-ferreira)
 
----
+-----
