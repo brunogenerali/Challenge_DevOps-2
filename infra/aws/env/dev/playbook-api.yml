@@ -1,10 +1,9 @@
 - name: Instalar Dependencias, clone repo e start API
-  hosts: aws-api
+  hosts: aws_api
   become: true
 
-  vars:
-    github_repo: "https://github.com/brunogenerali/Challenge_DevOps-2.git"
-    app_dir: "/home/ubuntu/api"
+  vars_files: "./vars.yaml"
+    
     
   tasks:
     - name: Instalar pacotes Java 17, e Maven
@@ -18,8 +17,22 @@
           update_cache: yes
           state: present
     
+    - name: Finalizar processos de Java
+      command: "pkill java"
+      ignore_errors: true
+
+    - name: Apagar pasta da API
+      command: "rm -rf {{ app_dir }}"
+    
     - name: Clonar Repositorio da API
       git:
         repo: "{{ github_repo }}"
         dest: "{{ app_dir }}"
-    
+
+    - name: Realizar Package
+      shell: |
+        cd "{{ app_dir }}" &&
+        mvn clean package -DskipTests 
+
+    - name: Executar API
+      command: "nohup java -Dspring.profiles.active=prod -DDATASOURCE_URL=jdbc:mysql://{{ db_ip_local }}/{{ db_prod }} -DDATASOURCE_USERNAME={{ mysql_root_user }} -DDATASOURCE_PASSWORD={{ mysql_root_password }} -jar {{ app_dir }}/target/api-0.0.1-SNAPSHOT.jar > out.txt 2>&1 &"

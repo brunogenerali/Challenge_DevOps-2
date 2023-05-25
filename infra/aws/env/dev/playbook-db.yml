@@ -1,9 +1,8 @@
 - name: Instalar e configurar o MySQL Server
-  hosts: aws-db
+  hosts: aws_db
   become: true
-  vars:
-    mysql_root_password: root  
-    mysql_config_file: /etc/mysql/mysql.conf.d/mysqld.cnf
+  vars_files: "./vars.yaml"
+    
 
   tasks:
     - name: Instalar pacotes mysql-server, python e python3-mysqldb
@@ -21,24 +20,75 @@
         name: pymysql
         state: present
 
+    - name: Verificar se o usuário do banco pode fazer login
+      mysql_user:        
+        name: "{{ mysql_root_user }}"
+        password: "{{ mysql_root_password }}"
+      register: resultado_login
+      failed_when: "'Access denied' in resultado_login"
+      changed_when: resultado_login is failed
+
+
     - name: Alterar a senha do usuário root
       mysql_user:
-        name: root
-        password: "{{ mysql_root_password }}"        
-        host_all: yes
-      ignore_errors: yes
+        name: "{{ mysql_root_user }}"
+        password: "{{ mysql_root_password }}"      
+        host: localhost
+      failed_when: resultado_login is success
+      changed_when: resultado_login is failed
+      when: resultado_login is failed
+
+    # - name: Verificar se o usuário existe
+    #   mysql_user:
+    #     name: "{{ mysql_user }}"
+    #     state: present
+    #     host: "%"
+    #   register: resultado_verificacao
+
+    - name: Criar usuário se não existir
+      mysql_user:
+        login_user : "{{ mysql_root_user }}"
+        login_password : "{{ mysql_root_password }}"
+        name: "{{ mysql_user }}"
+        update_password: "{{ mysql_password }}"
+        host: "%"
+        priv:
+          '"{{ db_prod }}".*': 'ALL,GRANT'
+          '"{{ db_test }}".*': 'ALL,GRANT'
+
+    # - name: Alterar permissões do usuário do MySQL para qualquer IP
+    #   become: yes
+    #   mysql_user:
+    #     name: "{{ mysql_root_user }}"
+    #     password: "{{ mysql_root_password }}"
+    #     host: '%'
+    #     priv: '*.*:ALL'
+    #     append_privs: yes
 
     - name: Criar bancos de dados
       mysql_db:
         name: "{{ item }}"
         state: present
-        login_user: root
+        login_user: "{{ mysql_root_user }}"
         login_password: "{{ mysql_root_password }}"      
       loop:
-        - vollmed_api
-        - vollmed_api_test
-
+        - "{{ db_prod }}"
+        - "{{ db_test }}"
     
+    - name: Garantir privilégios no banco de dados db1
+      mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_password }}"
+        priv: "{{ db_prod }}.*:ALL"
+        state: present
+
+    - name: Garantir privilégios no banco de dados db1
+      mysql_user:
+        name: "{{ mysql_user }}"
+        password: "{{ mysql_password }}"
+        priv: "{{ db_prod }}.*:ALL"
+        state: present
+
     - name: Atualizar o arquivo de configuração do MySQL
       lineinfile:
         path: "{{ mysql_config_file }}"
